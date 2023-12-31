@@ -253,6 +253,7 @@ impl Instance {
         module: &Module,
         imports: Imports<'_>,
     ) -> Result<(Instance, Option<FuncIndex>)> {
+        println!("instance new_raw");
         if !Engine::same(store.engine(), module.engine()) {
             bail!("cross-`Engine` instantiation is not currently supported");
         }

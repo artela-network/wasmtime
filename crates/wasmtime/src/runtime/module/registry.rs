@@ -161,6 +161,7 @@ impl ModuleRegistry {
         }
         let prev = self.loaded_code.insert(end_addr, (start_addr, item));
         assert!(prev.is_none());
+        println!("module.loaded_code len: {0}", self.loaded_code.len());
         id
     }
 
