@@ -140,6 +140,7 @@ pub extern "C" fn wasmtime_linker_instantiate(
     instance_ptr: &mut Instance,
     trap_ptr: &mut *mut wasm_trap_t,
 ) -> Option<Box<wasmtime_error_t>> {
+    println!("wasmtime_linker_instantiate...");
     let result = linker.linker.instantiate(store, &module.module);
     super::instance::handle_instantiate(result, instance_ptr, trap_ptr)
 }
@@ -165,6 +166,7 @@ pub unsafe extern "C" fn wasmtime_linker_module(
     name_len: usize,
     module: &wasmtime_module_t,
 ) -> Option<Box<wasmtime_error_t>> {
+    println!("wasmtime_linker_module...");
     let linker = &mut linker.linker;
     let name = to_str!(name, name_len);
     handle_result(linker.module(store, name, &module.module), |_linker| ())

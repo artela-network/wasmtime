@@ -1133,6 +1133,7 @@ impl<T> Linker<T> {
         mut store: impl AsContextMut<Data = T>,
         module: &Module,
     ) -> Result<Instance> {
+        println!("instantiate...");
         self._instantiate_pre(module, Some(store.as_context_mut().0))?
             .instantiate(store)
     }

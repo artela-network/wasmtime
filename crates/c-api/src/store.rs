@@ -103,6 +103,7 @@ pub extern "C" fn wasmtime_store_new(
     data: *mut c_void,
     finalizer: Option<extern "C" fn(*mut c_void)>,
 ) -> Box<wasmtime_store_t> {
+    print!("---wasmtime_store_new from RUST!---\n");
     Box::new(wasmtime_store_t {
         store: Store::new(
             &engine.engine,

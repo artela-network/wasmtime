@@ -505,6 +505,7 @@ impl Memory {
     /// # }
     /// ```
     pub fn grow(&self, mut store: impl AsContextMut, delta: u64) -> Result<u64> {
+        println!(">>>>>>>>>> grow memory!!!");
         let store = store.as_context_mut().0;
         let mem = self.wasmtime_memory(store);
         unsafe {
@@ -512,9 +513,13 @@ impl Memory {
                 Some(size) => {
                     let vm = (*mem).vmmemory();
                     *store[self.0].definition = vm;
+                    println!(">>>>>>>>>> grow memory success!!!");
                     Ok(u64::try_from(size).unwrap() / u64::from(wasmtime_environ::WASM_PAGE_SIZE))
                 }
-                None => bail!("failed to grow memory by `{}`", delta),
+                None => {
+                    println!(">>>>>>>>>> grow memory failed!!!");
+                    bail!("failed to grow memory by `{}`", delta)
+                }
             }
         }
     }
@@ -536,6 +541,7 @@ impl Memory {
     where
         T: Send,
     {
+        println!(">>>>>>>>>> grow memory async!!!");
         let mut store = store.as_context_mut();
         assert!(
             store.0.async_support(),
