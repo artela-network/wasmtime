@@ -74,6 +74,8 @@ impl Mmap {
     pub fn make_accessible(&mut self, start: usize, len: usize) -> Result<()> {
         let ptr = self.memory.as_ptr();
         unsafe {
+            let base: *mut u8  = self.memory.as_ptr().byte_add(start).cast();
+            println!("=====make_accessible base:{:#?}, len:{}", base, len);
             mprotect(
                 ptr.byte_add(start).cast(),
                 len,
@@ -122,6 +124,7 @@ impl Mmap {
             flags
         };
 
+        println!("=====make_executable base:{:#?}, len:{}, flags:{:#?}", base, len, flags);
         mprotect(base, len, flags)?;
 
         Ok(())
@@ -131,6 +134,7 @@ impl Mmap {
         let base = self.memory.as_ptr().byte_add(range.start).cast();
         let len = range.end - range.start;
 
+        println!("=====make_readonly base:{:#?}, len:{}.", base, len);
         mprotect(base, len, MprotectFlags::READ)?;
 
         Ok(())
